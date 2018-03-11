@@ -1,6 +1,6 @@
 ## 15 Puzzle
 
-Source
+Code
 
 ````html
 <body onkeydown=m(event.which&3) onload="m=d=>{for(i=c==s?1999:0;i--;)setTimeout(a
