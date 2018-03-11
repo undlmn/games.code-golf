@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>15 puzzle</title>
+  <script type="text/javascript">
+    "use strict";
+
+    window.onload = function() {
+
+      var out = document.createElement('pre');
+      out.style.fontSize = "1cm";
+      document.body.appendChild(out);
+
+      // Init
+      var field = [];
+      var i, j;
+      i = j = 0;
+      while(i < 20) {
+        field[i++] = i % 5 ? "[" + (j < 9 ? 0 : "") + ++j + "]" : "\n";
+      }
+
+      var position = 18;
+      var solved = "-";
+      var current = "";
+      move(1);
+      solved = current;
+
+      window.onkeypress = function (e) {
+        move(e.keyCode & 3);
+      }
+
+      function move(direction) {
+
+        // Shuffle
+        if (current == solved) {
+          var count = 1000;
+          while(--count) {
+            setTimeout(function() {
+              move(Math.random() * 4 | 0);
+            }, count);
+          }
+        }
+
+        // Move
+        var newPosition = position + [-5, 1, 5, -1][direction];
+        if (newPosition >= 0 && newPosition < 19 && (newPosition + 1) % 5) {
+          field[position] = field[newPosition];
+          position = newPosition;
+        }
+        field[position] = "    ";
+
+        // Display
+        out.innerText = current = field.join("");
+        out.style.color = current == solved ? "#0c0" : "#000";
+      }
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>
